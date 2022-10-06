@@ -1,35 +1,31 @@
 #include "monty.h"
 
 /**
-* main -    Controls Program flow
-* @argc:    Number of Arguments Passed
-* @argv:    Array of Arguments Strings
-*
-* Return:   Returns (0) on Success
+ * main -	Controls Program Flow
+ * @argc:	Number of Arguments Passed
+ * @argv:	Array of Arguments Strings
+ *
+ * Return: 0
 */
 
 int main(int argc, char **argv)
 {
-	stack_t *head = NULL; /* for tokenised list */
-	size_t buffer_size = 0;
-	char *buffer = NULL; /* for tokenised list */
-	FILE *fp = NULL; /* To store file read */
+	stack_t *head = NULL; /* Pointer to top of Stack */
+	char *buffer = NULL; /* To store String Buffer */
+	size_t buff_size = 0;
 	unsigned int line_number = 0;
+	FILE *fp = NULL;
 
 	if (argc != 2)
-	{
 		error_1(1);
-		exit(EXIT_FAILURE);
-	}
 
-	fp = fopen(argv[1], "r+");
-	if (fp == NULL)
+	fp = fopen(argv[1], "r");
+	if (!fp)
 	{
 		error_1(2);
-		exit(EXIT_FAILURE);
 	}
 
-	while (getline(&buffer, &buffer_size, fp) != 1)
+	while ((getline(&buffer, &buff_size, fp)) != -1)
 	{
 		line_number++;
 		if (buffer[0] != '#')
@@ -37,8 +33,7 @@ int main(int argc, char **argv)
 	}
 
 	free(buffer);
-	free_stack(&head);
+	freestack(&head);
 	fclose(fp);
-
 	return (0);
 }
