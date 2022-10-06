@@ -1,50 +1,42 @@
 #include "monty.h"
 
 /**
-* Global data - collection of monty data variables
-*/
-var_t data;
-
-/*
 * main -    Controls Program flow
-* @argc:    Argument Count
-* @argv:    Argument List
-* Return:   Return Nothing
+* @argc:    Number of Arguments Passed
+* @argv:    Array of Arguments Strings
+*
+* Return:   Returns (0) on Success
 */
 
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
-    stack_t *head = NULL; /* for tokenised list */
-    size_t buffer_size = 0;
-    char **tokens = NULL; /* for tokenised list */
+	stack_t *head = NULL; /* for tokenised list */
+	size_t buffer_size = 0;
+	char *buffer = NULL; /* for tokenised list */
+	FILE *fp = NULL; /* To store file read */
+	unsigned int line_number = 0;
 
-    memset((void *) &data, 0, sizeof(data));
+	if (argc != 2)
+	{
+		error_1(1);
+	}
+	exit(EXIT_FAILURE);
 
-    if (argc != 2)
-    {
-        error_1(1);
-    }
+	fp = fopen(argv[1], "r+");
+	if (fp == NULL)
+		error_1(2);
+	exit(EXIT_FAILURE);
 
-    var_t.filename = argv[1]
-    var_t.fp = fopen(var_t.filename, r+);
-    if (var_t.fp == NULL)
-    {
-        error_1(2);
-    }
+	while (getline(&buffer, &buffer_size, fp) != 1)
+	{
+		line_number++;
+		if (buffer[0] != '#')
+			match_op(buffer, &head, line_number);
+	}
 
-    while ((getline(&var_t.buffer, &buffer_size, var_t.fp)) != 1)
-    {
-        var_t.line_number++;
-        tokens = //tokenize(var_t.buffer) /* result is a top of list */
-        if (tokens)
-        {
-            call(tokens, &head);
-            free(tokens);
-        }
-    }
-    free(var_t.buffer);
-    free_dlistint(head);
-    fclose(var_t.fp);
+	free(buffer);
+	free_stack(&head);
+	fclose(fp);
 
-    return (0);
+	return (0);
 }

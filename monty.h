@@ -1,12 +1,16 @@
 #ifndef _MONTY_H
 #define _MONTY_H
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdarg.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -19,9 +23,9 @@
  */
 typedef struct stack_s
 {
-    int n;
-    struct stack_s *prev;
-    struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -34,35 +38,36 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-    char *opcode;
-    void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/**
- * struct var_s -   struct to contain the main variables of the Monty Interpreter
- * @buffer:         Current read line
- * @args:           the arguments part of the parsed read line
- * @filename:       The bytecode filename
- * @line_number:    The line number of the bytecode instruction
- */
-typedef struct var_s
-{
-	char *buffer;
-	char **args;
-	char *filename;
-	int line_number;
-	FILE *fp;
-} var_t;
-
-extern var_t data;
+extern unsigned int line_number;
 
 /* Error Handling */
 void error_1(int error_code, ...);
-
 /* Memo Handling */
-void free_dlistint(stack_t *head);
+void free_stack(stack_t **head);
+/* Helper Functions */
+void match_op(char *, stack_t **, unsigned int);
+char **tokenise(char *);
+void check_push(stack_t **, char **, unsigned int __attribute__((unused)));
+/* Stack Helper Functions */
+void _push(stack_t **, unsigned int);
+void _pop(stack_t **, unsigned int);
+void _swap(stack_t **, unsigned int);
+void _pint(stack_t **, unsigned int);
+void _add(stack_t **, unsigned int);
+void _nop(stack_t **, unsigned int);
+void _pall(stack_t **, unsigned int);
+void _sub(stack_t **, unsigned int);
+void _add(stack_t **, unsigned int);
+void _div(stack_t **, unsigned int);
+void _mul(stack_t **, unsigned int);
+void _mod(stack_t **, unsigned int);
+void _pchar(stack_t **, unsigned int);
+void _pstr(stack_t **, unsigned int);
 
-/* Argument Handlers */
-char **tokenize(char *buffer)
+int _isdigit(int);
 
 #endif /* _MONTY_H */
