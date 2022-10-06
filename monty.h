@@ -1,16 +1,14 @@
-#ifndef _MONTY_H
-#define _MONTY_H
+#ifndef MONTY_H
+#define MONTY_H
 
 #define _GNU_SOURCE
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -19,7 +17,7 @@
  * @next: points to the next element of the stack (or queue)
  *
  * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO
+ * for stack, queues, LIFO, FIFO Holberton project
  */
 typedef struct stack_s
 {
@@ -34,7 +32,7 @@ typedef struct stack_s
  * @f: function to handle the opcode
  *
  * Description: opcode and its function
- * for stack, queues, LIFO, FIFO
+ * for stack, queues, LIFO, FIFO Holberton project
  */
 typedef struct instruction_s
 {
@@ -42,32 +40,26 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-extern unsigned int line_number;
-
-/* Error Handling */
-void error_1(int error_code, ...);
-/* Memo Handling */
-void free_stack(stack_t **head);
-/* Helper Functions */
-void match_op(char *, stack_t **, unsigned int);
-char **tokenise(char *);
-void check_push(stack_t **, char **, unsigned int __attribute__((unused)));
-/* Stack Helper Functions */
-void _push(stack_t **, unsigned int);
-void _pop(stack_t **, unsigned int);
-void _swap(stack_t **, unsigned int);
-void _pint(stack_t **, unsigned int);
-void _add(stack_t **, unsigned int);
-void _nop(stack_t **, unsigned int);
-void _pall(stack_t **, unsigned int);
-void _sub(stack_t **, unsigned int);
-void _add(stack_t **, unsigned int);
-void _div(stack_t **, unsigned int);
-void _mul(stack_t **, unsigned int);
-void _mod(stack_t **, unsigned int);
-void _pchar(stack_t **, unsigned int);
-void _pstr(stack_t **, unsigned int);
+void push(stack_t **, unsigned int);
+void pop(stack_t **, unsigned int);
+void swap(stack_t **, unsigned int);
+void pint(stack_t **, unsigned int);
+void add(stack_t **, unsigned int);
+void nop(stack_t **, unsigned int);
+void pall(stack_t **, unsigned int);
+void sub(stack_t **, unsigned int);
+void add(stack_t **, unsigned int);
+void division(stack_t **, unsigned int);
+void mul(stack_t **, unsigned int);
+void mod(stack_t **, unsigned int);
+void pchar(stack_t **, unsigned int);
+void pstr(stack_t **, unsigned int);
 
 int _isdigit(int);
+void is_opcode(char *, stack_t **, unsigned int);
+char **parse(char *);
+void freestack(stack_t **);
+void check_push(stack_t **, char **, unsigned int);
 
-#endif /* _MONTY_H */
+#endif
+

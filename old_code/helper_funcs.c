@@ -12,11 +12,7 @@ void match_op(char *buffer, stack_t **top, unsigned int line_number)
 {
 	char **tokens;
 	instruction_t valid_ops[] = {
-		{"push", _push}, {"pall", _pall}, {"pint", _pint},
-		{"pop", _pop}, {"nop", _nop}, {"add", _add},
-		{"swap", _swap}, {"sub", _sub}, {"mul", _mul},
-		{"div", _div}, {"mod", _mod}, {"pchar", _pchar},
-		{"pstr", _pstr}, {NULL, NULL}
+		{"push", _push}, {"pall", _pall}, {NULL, NULL}
 		};
 
 	int i = 0, j = 0, len, len2, b = 0;
@@ -63,7 +59,7 @@ char **tokenise(char *buffer)
 	char **tokens, *token, *delim;
 	int idx = 0;
 
-	delim = "\n\t\r ";
+	delim = "\n \t\r";
 	tokens = malloc(sizeof(char *) * 3);
 	if (tokens == NULL)
 	{
